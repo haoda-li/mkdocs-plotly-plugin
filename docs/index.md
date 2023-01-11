@@ -56,8 +56,6 @@ You can insert any valid plotly JSON as a codeblock using:
 ```
 ````
 
-
-
 ``` plotly
 {
     "data": [
@@ -78,6 +76,19 @@ You can insert any valid plotly JSON as a codeblock using:
 }
 ```
 
+This is compatiable with `snipplets` as well
+
+````
+```plotly
+;--8<-- "assets/data.json"
+```
+````
+
+```plotly
+--8<-- "assets/data.json"
+```
+
+
 or you can insert any plotly JSON through URLs
 
 
@@ -90,6 +101,10 @@ or you can insert any plotly JSON through URLs
 ```plotly
 {"file_path": "./assets/data.json"}
 ```
+!!!note "Snipplets vs. file path"
+
+    Using `snipplets` will insert the json content into the output HTML file, which is more suitable for smaller datasets. Using `file_path` will fetch the json content once the page is loaded.
+
 
 !!!note "Plotly JSON"
 

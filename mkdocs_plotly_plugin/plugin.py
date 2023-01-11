@@ -43,7 +43,7 @@ class PlotlyChartsPlugin(BasePlugin):
 
         lib_link = soup.new_tag("script")
         if self.config['lib_path'] == "":
-            lib_url = "https://cdn.plot.ly/plotly-2.16.1.min.js"
+            lib_url = "https://cdn.plot.ly/plotly-latest.min.js"
         else:
             lib_url = utils.get_relative_url(
                 utils.normalize_url("assets/javascripts/plotly.min.js"),
@@ -51,19 +51,38 @@ class PlotlyChartsPlugin(BasePlugin):
             )
         lib_link.attrs['src'] = lib_url
         soup.head.append(lib_link)
+        docs_dir = config['docs_dir']
+        
+        if self.config['enable_template']:    
+            templates = ["plotly", "plotly_white", "plotly_dark",
+                        "ggplot2", "seaborn", "simple_white", "none"]
+            if self.config['template_default'] in templates:
+                template_default_file = os.path.join(
+                    base_path, "templates", f"{self.config['template_default']}.json")
+            else:
+                template_default_file = os.path.join(
+                    docs_dir, self.config['template_default'])
+            if self.config['template_slate'] in templates:
+                template_slate_file = os.path.join(
+                    base_path, "templates", f"{self.config['template_slate']}.json")
+            else:
+                template_slate_file = os.path.join(
+                    docs_dir, self.config['template_slate'])
 
-        template_data = soup.new_tag("span")
-        template_data.attrs['hidden'] = True
-        template_data.attrs['data-default'] = utils.get_relative_url(
-            utils.normalize_url("assets/templates/default.json"),
-            page.url
-        )
-        template_data.attrs['data-slate'] = utils.get_relative_url(
-            utils.normalize_url("assets/templates/slate.json"),
-            page.url
-        )
-        template_data.attrs['id'] = 'template-json'
-        soup.body.append(template_data)
+            template_default = soup.new_tag("span")
+            template_default.attrs['hidden'] = True
+            with open(template_default_file) as f:
+                template_default.string = f.read()
+            template_default.attrs['id'] = 'default-template-settings'
+            soup.body.append(template_default)
+            
+            
+            template_slate = soup.new_tag("span")
+            template_slate.attrs['hidden'] = True
+            with open(template_slate_file) as f:
+                template_slate.string = f.read()
+            template_slate.attrs['id'] = 'slate-template-settings'
+            soup.body.append(template_slate)
 
         js_code = soup.new_tag("script")
         js_code.attrs['src'] = utils.get_relative_url(
@@ -104,25 +123,3 @@ class PlotlyChartsPlugin(BasePlugin):
                 os.path.join(docs_dir, self.config['lib_path']),
                 os.path.join(output_base_path, "javascripts", "plotly.min.js"),
             )
-        templates = ["plotly", "plotly_white", "plotly_dark",
-                     "ggplot2", "seaborn", "simple_white", "none"]
-        if self.config['template_default'] in templates:
-            template_default_file = os.path.join(
-                base_path, "templates", f"{self.config['template_default']}.json")
-        else:
-            template_default_file = os.path.join(
-                docs_dir, self.config['template_default'])
-        if self.config['template_slate'] in templates:
-            template_slate_file = os.path.join(
-                base_path, "templates", f"{self.config['template_slate']}.json")
-        else:
-            template_slate_file = os.path.join(
-                docs_dir, self.config['template_slate'])
-        utils.copy_file(
-            template_default_file,
-            os.path.join(output_base_path, "templates", "default.json"),
-        )
-        utils.copy_file(
-            template_slate_file,
-            os.path.join(output_base_path, "templates", "slate.json"),
-        )

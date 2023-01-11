@@ -1,32 +1,49 @@
 'use strict'
 
+const plotlyCharts = document.querySelectorAll("div.plotly-chart");
+const bodyelement = document.querySelector('body');
 
-const plotlyCharts = document.querySelectorAll("div.plotly-chart")
-let defaultTemplate, slateTemplate;
+const defaultTemplate = document.querySelector("#default-template-settings");
+const slateTemplate = document.querySelector("#slate-template-settings");
 
-const templateDOM = document.querySelector("#template-json")
-fetchData(templateDOM.dataset.default).then(data => {
-    defaultTemplate = data;
-}).then(() => {
-    fetchData(templateDOM.dataset.slate).then(data => {
-        slateTemplate = data;
-        updateTemplate();
+const defaultTemlateSettings = defaultTemplate ? JSON.parse(defaultTemplate.textContent) : null;
+const slateTemplateSettings = slateTemplate ? JSON.parse(slateTemplate.textContent) : null;
+
+
+function updateTemplate() {
+    if (bodyelement.getAttribute('data-md-color-scheme') == 'slate') {
+        plotlyCharts.forEach(div => {
+            if (div.dataset.load)
+                Plotly.relayout(div, slateTemplateSettings)
+        });
+    } else { 
+        plotlyCharts.forEach(div => {
+            if (div.dataset.load)
+                Plotly.relayout(div, defaultTemlateSettings)
+        });
+    }
+}
+
+if (slateTemplateSettings && defaultTemlateSettings) {
+    const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
+            if (mutation.type === "attributes") {
+                if (mutation.attributeName == "data-md-color-scheme") {
+                    updateTemplate();
+                }
+            }
+        });
     });
+    observer.observe(bodyelement, {
+        attributes: true //configure it to listen to attribute changes
+    });
+}
 
-});
 
 async function fetchData(url) {
     const resp = await fetch(url);
     const data = await resp.json();
     return data;
-}
-
-function updateTemplate() {
-    if (bodyelement.getAttribute('data-md-color-scheme') == 'slate') {
-        plotlyCharts.forEach(div => Plotly.relayout(div, slateTemplate));
-    } else {
-        plotlyCharts.forEach(div => Plotly.relayout(div, defaultTemplate));
-    }
 }
 
 plotlyCharts.forEach(div => {
@@ -37,6 +54,9 @@ plotlyCharts.forEach(div => {
                 const layout = plot_data.layout ? plot_data.layout : {};
                 const config = plot_data.config ? plot_data.config : {};
                 Plotly.newPlot(div, data, layout, config);
+                div.dataset.load = true;
+                if (slateTemplateSettings && defaultTemlateSettings)
+                    updateTemplate();
             }
         )
     else {
@@ -46,31 +66,11 @@ plotlyCharts.forEach(div => {
         const layout = plot_data.layout ? plot_data.layout : {};
         const config = plot_data.config ? plot_data.config : {};
         Plotly.newPlot(div, data, layout, config);
+        div.dataset.load = true;
+        if (slateTemplateSettings && defaultTemlateSettings)
+            updateTemplate();
     }
 })
 
-// mkdocs-material has a dark mode including a toggle
-// We should watch when dark mode changes and update charts accordingly
-
-const bodyelement = document.querySelector('body');
-const observer = new MutationObserver(mutations => {
-    if (!slateTemplate) {
-        return;
-    }
-    mutations.forEach(mutation => {
-        if (mutation.type === "attributes") {
-            if (mutation.attributeName == "data-md-color-scheme") {
-                if (bodyelement.getAttribute('data-md-color-scheme') == 'slate') {
-                    plotlyCharts.forEach(div => Plotly.relayout(div, slateTemplate))
-                } else {
-                    plotlyCharts.forEach(div => Plotly.relayout(div, defaultTemplate))
-                }
-            }
-        }
-    });
-});
-observer.observe(bodyelement, {
-    attributes: true //configure it to listen to attribute changes
-});
 
 

@@ -28,7 +28,7 @@ with open("./docs/assets/scatter.json", "w") as f:
 ```
 
 ```plotly
-{"file_path": "/assets/scatter.json"}
+--8<-- "./assets/scatter.json"
 ```
 
 
@@ -51,7 +51,7 @@ with open("./docs/assets/contour.json", "w") as f:
 ```
 
 ```plotly
-{"file_path": "/assets/contour.json"}
+--8<-- "./assets/contour.json"
 ```
 
 ## 3D Scatter Plot
