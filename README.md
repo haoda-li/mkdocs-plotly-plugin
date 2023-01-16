@@ -3,6 +3,7 @@
 # Mkdocs Plotly Plugin
 
 ![PyPI](https://img.shields.io/pypi/v/mkdocs-plotly-plugin)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/mkdocs-plotly-plugin)
 ![PyPI - License](https://img.shields.io/pypi/l/mkdocs-plotly-plugin)
 
 [MkDocs](https://www.mkdocs.org/) plugin to create interactive charts from data using the declarative [plotly](https://plotly.com/javascript/)'s json syntax. 
