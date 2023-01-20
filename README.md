@@ -28,7 +28,7 @@ markdown_extensions:
   - pymdownx.superfences:
       custom_fences:
         - name: plotly
-          class: plotly
+          class: mkdocs-plotly
           format: !!python/name:mkdocs_plotly_plugin.fences.fence_plotly
 ```
 
