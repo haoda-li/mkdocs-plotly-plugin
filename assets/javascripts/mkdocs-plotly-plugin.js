@@ -1,6 +1,8 @@
 'use strict'
 
-const plotlyCharts = document.querySelectorAll("div.plotly-chart");
+const plotlyCharts = [...document.querySelectorAll("div.mkdocs-plotly")].map(d => {
+    return {div: d}
+});
 const bodyelement = document.querySelector('body');
 
 const defaultTemplate = document.querySelector("#default-template-settings");
@@ -10,17 +12,26 @@ const defaultTemlateSettings = defaultTemplate ? JSON.parse(defaultTemplate.text
 const slateTemplateSettings = slateTemplate ? JSON.parse(slateTemplate.textContent) : null;
 
 
-function updateTemplate() {
+function updateTemplates() {
     if (bodyelement.getAttribute('data-md-color-scheme') == 'slate') {
-        plotlyCharts.forEach(div => {
-            if (div.dataset.load)
-                Plotly.relayout(div, slateTemplateSettings)
+        plotlyCharts.forEach(chart => {
+            if (!chart.div.classList.contains("no-auto-theme") && chart.load)
+                Plotly.relayout(chart.div, chart.slateTemplate)
         });
     } else { 
-        plotlyCharts.forEach(div => {
-            if (div.dataset.load)
-                Plotly.relayout(div, defaultTemlateSettings)
+        plotlyCharts.forEach(chart => {
+            if (!chart.div.classList.contains("no-auto-theme") && chart.load)
+                Plotly.relayout(chart.div, chart.defaultTemlate)
         });
+    }
+}
+function updateTemplate(chart) {
+    if (bodyelement.getAttribute('data-md-color-scheme') == 'slate') {
+        if (!(chart.div).classList.contains("no-auto-theme") && chart.load)
+            Plotly.relayout(chart.div, chart.slateTemplate)
+    } else { 
+        if (!chart.div.classList.contains("no-auto-theme") && chart.load)
+            Plotly.relayout(chart.div, chart.defaultTemlate)
     }
 }
 
@@ -29,7 +40,7 @@ if (slateTemplateSettings && defaultTemlateSettings) {
         mutations.forEach(mutation => {
             if (mutation.type === "attributes") {
                 if (mutation.attributeName == "data-md-color-scheme") {
-                    updateTemplate();
+                    updateTemplates();
                 }
             }
         });
@@ -46,29 +57,31 @@ async function fetchData(url) {
     return data;
 }
 
-plotlyCharts.forEach(div => {
-    if (div.dataset.jsonpath)
-        fetchData(div.dataset.jsonpath).then(
+plotlyCharts.forEach(chart => {
+    if (chart.div.dataset.jsonpath)
+        fetchData(chart.div.dataset.jsonpath).then(
             plot_data => {
                 const data = plot_data.data ? plot_data.data : {};
                 const layout = plot_data.layout ? plot_data.layout : {};
                 const config = plot_data.config ? plot_data.config : {};
-                Plotly.newPlot(div, data, layout, config);
-                div.dataset.load = true;
-                if (slateTemplateSettings && defaultTemlateSettings)
-                    updateTemplate();
+                Plotly.newPlot(chart.div, data, layout, config);
+                chart.load = true;
+                chart.slateTemplate = plot_data.slateTemplate ? plot_data.slateTemplate : slateTemplateSettings;
+                chart.defaultTemlate = plot_data.defaultTemplate ? plot_data.defaultTemplate : defaultTemlateSettings;
+                updateTemplate(chart);
             }
         )
     else {
-        const plot_data = JSON.parse(div.textContent);
-        div.textContent = '';
+        const plot_data = JSON.parse(chart.div.textContent);
+        chart.div.textContent = '';
         const data = plot_data.data ? plot_data.data : {};
         const layout = plot_data.layout ? plot_data.layout : {};
         const config = plot_data.config ? plot_data.config : {};
-        Plotly.newPlot(div, data, layout, config);
-        div.dataset.load = true;
-        if (slateTemplateSettings && defaultTemlateSettings)
-            updateTemplate();
+        Plotly.newPlot(chart.div, data, layout, config);
+        chart.load = true;
+        chart.slateTemplate = plot_data.slateTemplate ? plot_data.slateTemplate : slateTemplateSettings;
+        chart.defaultTemlate = plot_data.defaultTemplate ? plot_data.defaultTemplate : defaultTemlateSettings;
+        updateTemplate(chart);
     }
 })
 
