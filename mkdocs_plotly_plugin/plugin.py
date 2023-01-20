@@ -14,12 +14,14 @@ print(base_path)
 CUSTOM_FENCES = [
     {"name": "plotly", "class": "plotly-chart", "format": fence_plotly}]
 
+TEMPLATES = ["plotly", "plotly_min", "plotly_dark_min", "plotly_white", "plotly_dark",
+                        "ggplot2", "seaborn", "simple_white", "none"]
 
 class PlotlyChartsPlugin(BasePlugin):
     config_scheme = (
         ("lib_path", config_options.Type(str, default='')),
-        ("template_default", config_options.Type(str, default='plotly')),
-        ("template_slate", config_options.Type(str, default='plotly_dark')),
+        ("template_default", config_options.Type(str, default='plotly_min')),
+        ("template_slate", config_options.Type(str, default='plotly_dark_min')),
         ("enable_template", config_options.Type(bool, default=True))
     )
 
@@ -38,7 +40,7 @@ class PlotlyChartsPlugin(BasePlugin):
     def on_post_page(self, output, page, config, **kwargs):
         """Add javascript script tag, javascript code, and template json to initialize Plotly"""
         soup = BeautifulSoup(output, "html.parser")
-        if not soup.find("div", class_="plotly-chart"):
+        if not soup.find("div", class_="mkdocs-plotly"):
             return output
 
         lib_link = soup.new_tag("script")
@@ -53,16 +55,14 @@ class PlotlyChartsPlugin(BasePlugin):
         soup.head.append(lib_link)
         docs_dir = config['docs_dir']
         
-        if self.config['enable_template']:    
-            templates = ["plotly", "plotly_white", "plotly_dark",
-                        "ggplot2", "seaborn", "simple_white", "none"]
-            if self.config['template_default'] in templates:
+        if self.config['enable_template']:
+            if self.config['template_default'] in TEMPLATES:
                 template_default_file = os.path.join(
                     base_path, "templates", f"{self.config['template_default']}.json")
             else:
                 template_default_file = os.path.join(
                     docs_dir, self.config['template_default'])
-            if self.config['template_slate'] in templates:
+            if self.config['template_slate'] in TEMPLATES:
                 template_slate_file = os.path.join(
                     base_path, "templates", f"{self.config['template_slate']}.json")
             else:

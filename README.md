@@ -86,8 +86,8 @@ Plotly has its own eco-system for creating charts in most statistical languages.
 | Option   | Default | Description                                                            |
 | -------- | ------- | ---------------------------------------------------------------------- |
 | lib_path | ` `      | Relative path to local `plotly.js` file, or leave it blank to use CDN. |
-| template_default   | `plotly`  | template for plotly charts in light mode |
-| template_slate | `plotly_dark`      | template for plotly charts in dark mode |
+| template_default   | `plotly_min`  | template for plotly charts in light mode |
+| template_slate | `plotly_dark_min`      | template for plotly charts in dark mode |
 | enable_template | True | use template to automatically change theme |
 
-Available Plotly templates are `["plotly", "plotly_white", "plotly_dark", "ggplot2", "seaborn", "simple_white", "none"]`. If you want to customize your own template, you can export it as a JSON file and provide its relative path in options.
+Available Plotly templates are `["plotly_min", "plotly_dark_min", "plotly", "plotly_white", "plotly_dark", "ggplot2", "seaborn", "simple_white", "none"]`. If you want to customize your own template, you can export it as a JSON file and provide its relative path in options.

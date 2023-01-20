@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="mkdocs-plotly-plugin",
-    version="0.0.2",
+    version="0.0.3",
     description="MkDocs plugin to add plotly charts from plotly's json data",
     long_description=long_description,
     long_description_content_type="text/markdown",

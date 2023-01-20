@@ -1,0 +1,80 @@
+{
+  "font": {
+    "color": "#f2f5fa"
+  },
+  "paper_bgcolor": "rgba(0,0,0,0)",
+  "plot_bgcolor": "rgb(17,17,17)",
+  "polar": {
+    "bgcolor": "rgb(17,17,17)",
+    "angularaxis": {
+      "gridcolor": "#506784",
+      "linecolor": "#506784"
+    },
+    "radialaxis": {
+      "gridcolor": "#506784",
+      "linecolor": "#506784"
+    }
+  },
+  "ternary": {
+    "bgcolor": "rgb(17,17,17)",
+    "aaxis": {
+      "gridcolor": "#506784",
+      "linecolor": "#506784"
+    },
+    "baxis": {
+      "gridcolor": "#506784",
+      "linecolor": "#506784"
+    },
+    "caxis": {
+      "gridcolor": "#506784",
+      "linecolor": "#506784"
+    }
+  },
+  "xaxis": {
+    "gridcolor": "#283442",
+    "linecolor": "#506784",
+    "zerolinecolor": "#283442"
+  },
+  "yaxis": {
+    "gridcolor": "#283442",
+    "linecolor": "#506784",
+    "zerolinecolor": "#283442"
+  },
+  "scene": {
+    "xaxis": {
+      "backgroundcolor": "rgb(17,17,17)",
+      "gridcolor": "#506784",
+      "linecolor": "#506784",
+      "zerolinecolor": "#C8D4E3"
+    },
+    "yaxis": {
+      "backgroundcolor": "rgb(17,17,17)",
+      "gridcolor": "#506784",
+      "linecolor": "#506784",
+      "zerolinecolor": "#C8D4E3"
+    },
+    "zaxis": {
+      "backgroundcolor": "rgb(17,17,17)",
+      "gridcolor": "#506784",
+      "linecolor": "#506784",
+      "zerolinecolor": "#C8D4E3"
+    }
+  },
+  "shapedefaults": {
+    "line": {
+      "color": "#f2f5fa"
+    }
+  },
+  "annotationdefaults": {
+    "arrowcolor": "#f2f5fa"
+  },
+  "geo": {
+    "bgcolor": "rgb(17,17,17)",
+    "landcolor": "rgb(17,17,17)",
+    "subunitcolor": "#506784",
+    "lakecolor": "rgb(17,17,17)"
+  },
+  "mapbox": {
+    "style": "dark"
+  }
+}

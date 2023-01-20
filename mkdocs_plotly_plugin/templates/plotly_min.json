@@ -1,0 +1,80 @@
+{
+  "font": {
+    "color": "#2a3f5f"
+  },
+  "paper_bgcolor": "rgba(0,0,0,0)",
+  "plot_bgcolor": "#E5ECF6",
+  "polar": {
+    "bgcolor": "#E5ECF6",
+    "angularaxis": {
+      "gridcolor": "white",
+      "linecolor": "white"
+    },
+    "radialaxis": {
+      "gridcolor": "white",
+      "linecolor": "white"
+    }
+  },
+  "ternary": {
+    "bgcolor": "#E5ECF6",
+    "aaxis": {
+      "gridcolor": "white",
+      "linecolor": "white"
+    },
+    "baxis": {
+      "gridcolor": "white",
+      "linecolor": "white"
+    },
+    "caxis": {
+      "gridcolor": "white",
+      "linecolor": "white"
+    }
+  },
+  "xaxis": {
+    "gridcolor": "white",
+    "linecolor": "white",
+    "zerolinecolor": "white"
+  },
+  "yaxis": {
+    "gridcolor": "white",
+    "linecolor": "white",
+    "zerolinecolor": "white"
+  },
+  "scene": {
+    "xaxis": {
+      "backgroundcolor": "#E5ECF6",
+      "gridcolor": "white",
+      "linecolor": "white",
+      "zerolinecolor": "white"
+    },
+    "yaxis": {
+      "backgroundcolor": "#E5ECF6",
+      "gridcolor": "white",
+      "linecolor": "white",
+      "zerolinecolor": "white"
+    },
+    "zaxis": {
+      "backgroundcolor": "#E5ECF6",
+      "gridcolor": "white",
+      "linecolor": "white",
+      "zerolinecolor": "white"
+    }
+  },
+  "shapedefaults": {
+    "line": {
+      "color": "#2a3f5f"
+    }
+  },
+  "annotationdefaults": {
+    "arrowcolor": "#2a3f5f"
+  },
+  "geo": {
+    "bgcolor": "white",
+    "landcolor": "#E5ECF6",
+    "subunitcolor": "white",
+    "lakecolor": "white"
+  },
+  "mapbox": {
+    "style": "light"
+  }
+}
