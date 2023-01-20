@@ -40,16 +40,8 @@ You can insert any valid plotly JSON as a codeblock using:
 {
     "data": [
         {
-            "x": [
-                "giraffes",
-                "orangutans",
-                "monkeys"
-            ],
-            "y": [
-                20,
-                14,
-                23
-            ],
+            "x": ["giraffes", "orangutans", "monkeys"],
+            "y": [20, 14, 23],
             "type": "bar"
         }
     ]

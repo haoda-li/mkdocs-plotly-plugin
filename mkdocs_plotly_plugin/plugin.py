@@ -97,7 +97,7 @@ class PlotlyChartsPlugin(BasePlugin):
         """Update datapath to be relative to the docs dir
         """
         soup = BeautifulSoup(html, "html.parser")
-        charts = soup.find_all("div", class_="plotly-chart")
+        charts = soup.find_all("div", class_="mkdocs-plotly")
         for chart in charts:
             if chart.attrs.get('data-jsonpath'):
                 chart.attrs['data-jsonpath'] = utils.get_relative_url(
