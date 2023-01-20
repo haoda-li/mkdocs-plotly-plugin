@@ -66,5 +66,5 @@ with open("./docs/assets/scatter3d.json", "w") as f:
 ```
 
 ```plotly
-{"file_path": "/assets/scatter3d.json"}
+{"file_path": "../assets/scatter3d.json"}
 ```
