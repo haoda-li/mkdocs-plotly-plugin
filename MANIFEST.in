@@ -1,2 +1,2 @@
-include mkdocs_charts_plugin/javascripts/*.js
-include mkdocs_charts_plugin/templates/*.json
+include mkdocs_plotly_plugin/javascripts/*.js
+include mkdocs_plotly_plugin/templates/*.json

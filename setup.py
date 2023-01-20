@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="mkdocs-plotly-plugin",
-    version="0.0.3",
+    version="0.1.1",
     description="MkDocs plugin to add plotly charts from plotly's json data",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -14,7 +14,6 @@ setup(
     author="Haoda Li",
     author_email="haoda_li@berkeley.edu",
     license="MIT",
-    include_package_data=True,
     python_requires=">=3.6",
     classifiers=[
         "Operating System :: OS Independent",
@@ -28,6 +27,7 @@ setup(
     ],
     install_requires=["mkdocs>=1.1", "pymdown-extensions>=9.2", "beautifulsoup4>=4.11.1"],
     packages=find_packages(),
+    include_package_data=True,
     entry_points={
         "mkdocs.plugins": ["plotly = mkdocs_plotly_plugin.plugin:PlotlyChartsPlugin"]
     },
