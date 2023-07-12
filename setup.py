@@ -25,7 +25,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "License :: OSI Approved :: MIT License",
     ],
-    install_requires=["mkdocs>=1.1", "pymdown-extensions>=9.2", "beautifulsoup4>=4.11.1"],
+    install_requires=["mkdocs>=1.1", "pymdown-extensions>=9.2", "beautifulsoup4>=4.11.1", "flatten-dict>=0.4.2"],
     packages=find_packages(),
     include_package_data=True,
     entry_points={
