@@ -5,6 +5,8 @@ from mkdocs import utils
 from mkdocs.exceptions import PluginError
 from bs4 import BeautifulSoup
 from mkdocs.config import config_options
+from flatten_dict import flatten
+import json
 
 from mkdocs_plotly_plugin.fences import fence_plotly
 
@@ -16,6 +18,7 @@ CUSTOM_FENCES = [
 
 TEMPLATES = ["plotly", "plotly_min", "plotly_dark_min", "plotly_white", "plotly_dark",
                         "ggplot2", "seaborn", "simple_white", "none"]
+
 
 class PlotlyChartsPlugin(BasePlugin):
     config_scheme = (
@@ -54,7 +57,7 @@ class PlotlyChartsPlugin(BasePlugin):
         lib_link.attrs['src'] = lib_url
         soup.head.append(lib_link)
         docs_dir = config['docs_dir']
-        
+
         if self.config['enable_template']:
             if self.config['template_default'] in TEMPLATES:
                 template_default_file = os.path.join(
@@ -69,19 +72,29 @@ class PlotlyChartsPlugin(BasePlugin):
                 template_slate_file = os.path.join(
                     docs_dir, self.config['template_slate'])
 
-            template_default = soup.new_tag("span")
-            template_default.attrs['hidden'] = True
-            with open(template_default_file) as f:
-                template_default.string = f.read()
-            template_default.attrs['id'] = 'default-template-settings'
+            def create_template_span(span_id, template_file):
+                """
+                Create a span element which holds the default templates for plotly charts.
+                We flatten the template so that plotly only updates specified attributes
+                only and doesn't replace the entire sub-object.
+                https://plotly.com/javascript/plotlyjs-function-reference/#plotlyrestyle
+                The template json file can be nested to improve readability.
+                """
+                template_span = soup.new_tag('span')
+                template_span.attrs['id'] = span_id
+                template_span.attrs['hidden'] = True
+                with open(template_file) as f:
+                    template_dict = json.load(f)
+
+                template_dict = flatten(template_dict, reducer='dot')
+                # json dumps will make the json str short to reduce size of html doc
+                template_span.string = json.dumps(template_dict)
+                return template_span
+
+            template_default = create_template_span('default-template-settings', template_default_file)
             soup.body.append(template_default)
-            
-            
-            template_slate = soup.new_tag("span")
-            template_slate.attrs['hidden'] = True
-            with open(template_slate_file) as f:
-                template_slate.string = f.read()
-            template_slate.attrs['id'] = 'slate-template-settings'
+
+            template_slate = create_template_span('slate-template-settings', template_slate_file)
             soup.body.append(template_slate)
 
         js_code = soup.new_tag("script")
