@@ -29,7 +29,7 @@ nav:
   - Home: index.md
   - Gallery: gallery.md
   - Dark Theme: autotheme.md 
-  - Contributing: contributing.md
+  - Contributing: CONTRIBUTING.md
 
 plugins:
   - search
