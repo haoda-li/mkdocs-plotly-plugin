@@ -1,6 +1,18 @@
-
-
 # Mkdocs Plotly Plugin
+
+__This project is archived due to the [unmaintained Mkdocs and MKdocs for material dependency](https://squidfunk.github.io/mkdocs-material/blog/2025/11/05/zensical/#why-zensical)__
+
+ For using plotly on zensical, I would recommend use [markdown-exec plugin](https://zensical.org/docs/compatibility/mkdocs/plugins/#markdown-exec). 
+
+````markdown
+```python exec="on"
+
+fig = ... # create your plotly fig
+fig.update_traces(showscale=False)
+fig.update_layout(margin=dict(l=0, r=0, b=0, t=0))
+print(fig.to_html(full_html=False, include_plotlyjs="cdn"))
+```
+````
 
 ![PyPI](https://img.shields.io/pypi/v/mkdocs-plotly-plugin?style=for-the-badge)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mkdocs-plotly-plugin?style=for-the-badge)
